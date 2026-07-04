@@ -20,7 +20,7 @@ function renderProductCard(product) {
 
   return `
     <div class="col-span-1">
-      <a href="/product.php?id=${product.id}" class="block group">
+      <a href="/product/${product.id}" class="block group">
         <div class="bg-gray-900/50 border border-gray-800/50 rounded-2xl overflow-hidden transition-all duration-300 group-hover:border-violet-500/30 group-hover:shadow-lg group-hover:shadow-violet-500/5 group-hover:-translate-y-1">
           ${imgHtml}
           <div class="p-4">

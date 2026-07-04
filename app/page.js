@@ -84,7 +84,7 @@ export default function HomePage() {
               <i class="ph-duotone ph-box text-6xl text-gray-700 mb-4"></i>
               <h3 class="text-lg font-semibold text-gray-400 mb-1" data-i18n="section.empty_title">No keymaps found</h3>
               <p class="text-gray-600 text-sm mb-6" data-i18n="section.empty_desc">Be the first to share a keymap!</p>
-              <a href="/upload.php" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold hover:from-violet-400 hover:to-purple-500 transition-all">
+              <a href="/upload" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold hover:from-violet-400 hover:to-purple-500 transition-all">
                 <i class="ph-duotone ph-plus-circle"></i>
                 <span data-i18n="section.empty_btn">Upload Now</span>
               </a>
@@ -155,10 +155,10 @@ export default function HomePage() {
               <Link href="/" className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-violet-400 bg-violet-500/10">
                 <i className="ph-duotone ph-grid-four"></i> <span data-i18n="nav.browse">Browse</span>
               </Link>
-              <Link href="/upload.php" className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+              <Link href="/upload" className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
                 <i className="ph-duotone ph-upload"></i> <span data-i18n="nav.upload">Upload</span>
               </Link>
-              <Link href="/docs.php" className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+              <Link href="/docs" className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
                 <i className="ph-duotone ph-book-open"></i> <span data-i18n="nav.api">API</span>
               </Link>
             </div>
@@ -171,7 +171,7 @@ export default function HomePage() {
                 <span>🇺🇸</span>
               </button>
 
-              <Link href="/upload.php" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:from-violet-400 hover:to-purple-500 transition-all duration-200">
+              <Link href="/upload" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:from-violet-400 hover:to-purple-500 transition-all duration-200">
                 <i className="ph-duotone ph-plus-circle"></i>
                 <span data-i18n="nav.upload">Upload</span>
               </Link>
@@ -187,13 +187,13 @@ export default function HomePage() {
               <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-violet-400 bg-violet-500/10">
                 <i className="ph-duotone ph-grid-four"></i> <span data-i18n="nav.browse">Browse</span>
               </Link>
-              <Link href="/upload.php" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+              <Link href="/upload" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
                 <i className="ph-duotone ph-upload"></i> <span data-i18n="nav.upload">Upload</span>
               </Link>
-              <Link href="/docs.php" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+              <Link href="/docs" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
                 <i className="ph-duotone ph-book-open"></i> <span data-i18n="nav.api">API</span>
               </Link>
-              <Link href="/upload.php" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold sm:hidden">
+              <Link href="/upload" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-semibold sm:hidden">
                 <i className="ph-duotone ph-plus-circle"></i> <span data-i18n="nav.upload">Upload</span>
               </Link>
             </div>
@@ -217,11 +217,11 @@ export default function HomePage() {
               Share your custom touch control layouts for Martian Launcher. Browse community-created keymaps for Minecraft: Java Edition on Android.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <Link href="/upload.php" className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:from-violet-400 hover:to-purple-500 transition-all duration-200 w-full sm:w-auto justify-center">
+              <Link href="/upload" className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:from-violet-400 hover:to-purple-500 transition-all duration-200 w-full sm:w-auto justify-center">
                 <i className="ph-duotone ph-upload text-lg"></i>
                 <span data-i18n="hero.btn_upload">Share Your Keymap</span>
               </Link>
-              <Link href="/docs.php" className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3 rounded-xl bg-gray-800/50 border border-gray-700/50 text-gray-300 font-medium hover:bg-gray-800 hover:border-gray-600 transition-all w-full sm:w-auto justify-center">
+              <Link href="/docs" className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3 rounded-xl bg-gray-800/50 border border-gray-700/50 text-gray-300 font-medium hover:bg-gray-800 hover:border-gray-600 transition-all w-full sm:w-auto justify-center">
                 <i className="ph-duotone ph-code text-lg"></i>
                 <span data-i18n="hero.btn_docs">API Docs</span>
               </Link>
@@ -268,8 +268,8 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-gray-600 text-sm" data-i18n="footer.text">KeymapHub — Community Keymap Sharing for Martian Launcher</p>
             <div className="flex items-center gap-4">
-              <Link href="/docs.php" className="text-gray-500 hover:text-gray-300 text-sm transition-colors" data-i18n="nav.api">API</Link>
-              <Link href="/upload.php" className="text-gray-500 hover:text-gray-300 text-sm transition-colors" data-i18n="nav.upload">Upload</Link>
+              <Link href="/docs" className="text-gray-500 hover:text-gray-300 text-sm transition-colors" data-i18n="nav.api">API</Link>
+              <Link href="/upload" className="text-gray-500 hover:text-gray-300 text-sm transition-colors" data-i18n="nav.upload">Upload</Link>
             </div>
           </div>
         </div>
