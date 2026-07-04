@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { query } from '@/lib/db';
+import { readProducts } from '@/lib/store';
 
 export async function GET() {
   try {
-    const [row] = await query('SELECT COUNT(*) as cnt FROM products');
-    return NextResponse.json({ status: 'ok', database: 'connected', product_count: row.cnt });
+    const products = await readProducts();
+    return NextResponse.json({ status: 'ok', store: 'vercel-blob', product_count: products.length });
   } catch (e) {
     return NextResponse.json({ status: 'error', message: e.message }, { status: 500 });
   }

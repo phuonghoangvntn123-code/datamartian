@@ -1,39 +1,33 @@
 import { NextResponse } from 'next/server';
-import { query } from '@/lib/db';
-import { handleFileUpload, deleteBlob } from '@/lib/blob';
+import { readProducts, createProduct } from '@/lib/store';
+import { handleFileUpload } from '@/lib/blob';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
   const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '12')));
-  const offset = (page - 1) * limit;
-  const search = searchParams.get('search') || '';
+  const search = (searchParams.get('search') || '').toLowerCase();
   const author = searchParams.get('author') || '';
 
-  let where = [];
-  let params = [];
+  let products = await readProducts();
+
   if (search) {
-    where.push('(name LIKE ? OR description LIKE ?)');
-    params.push(`%${search}%`, `%${search}%`);
+    products = products.filter(p =>
+      (p.name || '').toLowerCase().includes(search) ||
+      (p.description || '').toLowerCase().includes(search)
+    );
   }
   if (author) {
-    where.push('author = ?');
-    params.push(author);
+    products = products.filter(p => p.author === author);
   }
-  const whereClause = where.length ? 'WHERE ' + where.join(' AND ') : '';
 
-  const [totalRow] = await query(`SELECT COUNT(*) as cnt FROM products ${whereClause}`, params);
-  const total = totalRow.cnt;
+  products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const total = products.length;
+  const pages = Math.ceil(total / limit);
+  const offset = (page - 1) * limit;
+  const data = products.slice(offset, offset + limit);
 
-  const products = await query(
-    `SELECT * FROM products ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-    [...params, limit, offset]
-  );
-
-  return NextResponse.json({
-    data: products,
-    pagination: { page, limit, total, pages: Math.ceil(total / limit) },
-  });
+  return NextResponse.json({ data, pagination: { page, limit, total, pages } });
 }
 
 export async function POST(request) {
@@ -77,11 +71,10 @@ export async function POST(request) {
     }
   }
 
-  const result = await query(
-    `INSERT INTO products (name, version, author, description, json_data, json_file, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [name, version, author, description, jsonData, jsonFilePath, imagePath]
-  );
+  const product = await createProduct({
+    name, version, author, description, json_data: jsonData,
+    json_file: jsonFilePath, image_path: imagePath,
+  });
 
-  const [product] = await query('SELECT * FROM products WHERE id = ?', [result.insertId]);
   return NextResponse.json(product, { status: 201 });
 }

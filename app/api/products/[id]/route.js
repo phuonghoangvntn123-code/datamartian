@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { query } from '@/lib/db';
+import { getProductById, updateProductById, deleteProductById } from '@/lib/store';
 import { handleFileUpload, deleteBlob } from '@/lib/blob';
 
 export async function GET(request, { params }) {
   const id = await Promise.resolve(params.id);
-  const [product] = await query('SELECT * FROM products WHERE id = ?', [id]);
+  const product = await getProductById(id);
   if (!product) {
     return NextResponse.json({ error: 'Product not found' }, { status: 404 });
   }
@@ -13,21 +13,19 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   const id = await Promise.resolve(params.id);
-
-  const [existing] = await query('SELECT * FROM products WHERE id = ?', [id]);
+  const existing = await getProductById(id);
   if (!existing) {
     return NextResponse.json({ error: 'Product not found' }, { status: 404 });
   }
 
-  let fields = [];
-  let values = [];
+  let updates = {};
   const ct = request.headers.get('content-type') || '';
 
   if (ct.includes('multipart/form-data')) {
     const formData = await request.formData();
     for (const f of ['name', 'version', 'author', 'description', 'json_data']) {
       const v = formData.get(f);
-      if (v !== null) { fields.push(`${f} = ?`); values.push(v); }
+      if (v !== null) updates[f] = v;
     }
 
     const img = formData.get('image');
@@ -37,8 +35,7 @@ export async function PUT(request, { params }) {
         return NextResponse.json({ error: 'Invalid image format' }, { status: 422 });
       }
       try {
-        const url = await handleFileUpload(img, 'keymaphub/images');
-        fields.push('image_path = ?'); values.push(url);
+        updates.image_path = await handleFileUpload(img, 'keymaphub/images');
         if (existing.image_path) deleteBlob(existing.image_path);
       } catch (e) {
         return NextResponse.json({ error: 'Image upload failed: ' + e.message }, { status: 500 });
@@ -52,8 +49,7 @@ export async function PUT(request, { params }) {
         return NextResponse.json({ error: 'Only .json files allowed' }, { status: 422 });
       }
       try {
-        const url = await handleFileUpload(json, 'keymaphub/json');
-        fields.push('json_file = ?'); values.push(url);
+        updates.json_file = await handleFileUpload(json, 'keymaphub/json');
         if (existing.json_file) deleteBlob(existing.json_file);
       } catch (e) {
         return NextResponse.json({ error: 'JSON upload failed: ' + e.message }, { status: 500 });
@@ -62,15 +58,14 @@ export async function PUT(request, { params }) {
   } else {
     const body = await request.json();
     for (const f of ['name', 'version', 'author', 'description', 'json_data']) {
-      if (body[f] !== undefined) { fields.push(`${f} = ?`); values.push(body[f]); }
+      if (body[f] !== undefined) updates[f] = body[f];
     }
   }
 
-  if (!fields.length) {
+  if (!Object.keys(updates).length) {
     return NextResponse.json({ error: 'No fields to update' }, { status: 422 });
   }
 
-  await query(`UPDATE products SET ${fields.join(', ')} WHERE id = ?`, [...values, id]);
-  const [product] = await query('SELECT * FROM products WHERE id = ?', [id]);
+  const product = await updateProductById(id, updates);
   return NextResponse.json(product);
 }
