@@ -85,7 +85,7 @@ export default function UploadPage() {
 
         if (res.ok) {
           showToast(t('upload.success'))
-          setTimeout(() => { window.location.href = `/product.php?id=${data.id}`; }, 1000)
+          setTimeout(() => { window.location.href = `/product/${data.id}`; }, 1000)
         } else {
           showToast((data.error || t('upload.error_upload')), 'danger')
           btn.disabled = false
